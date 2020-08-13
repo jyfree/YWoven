@@ -1,0 +1,64 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "version.gradle"
+
+
+buildscript {
+    ext.kotlin_version = '1.3.61'
+
+    //maven地址
+    ext.mavenUrl = 'https://dl.bintray.com/ljyfree/maven' //远程maven地址
+    if (isLocalMaven.toBoolean()) {
+        ext.mavenUrl = uri('./local-plugin') //本地maven地址
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven { url = mavenUrl }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        //上传到jcenter
+        classpath 'com.novoda:bintray-release:0.9.1'//上传到jcenter用到
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.18"//上传到jcenter kotlin用到
+
+        //YWoven插件
+        classpath "com.jy.woven:woven-plugin:1.0.0"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url = mavenUrl }
+    }
+
+    tasks.withType(Javadoc) {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+            linksOffline "http://d.android.com/reference", "${android.sdkDirectory}/docs/reference"
+        }
+        failOnError = false
+    }
+}
+
+ext {
+    userOrg = 'ljyfree'//bintray.com用户名
+    groupId = 'com.jy.woven'//组织id，jcenter上的路径
+    website = 'https://github.com/jyfree/YWoven'
+    licences = ['Apache-2.0']
+
+    localAnnotation = projectDir.getPath() + "/local-plugin/com/jy/woven/woven-annotation/1.0.0/woven-annotation-1.0.0.jar"
+
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,5 @@
+rootProject.name='YWoven'
+include ':app'
+include ':woven-plugin'
+include ':woven-annotation'
+include ':woven-api'

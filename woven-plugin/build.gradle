@@ -1,0 +1,62 @@
+apply plugin: 'groovy'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:3.2.1'
+    if (isLocalMaven.toBoolean()) {
+        implementation files(localAnnotation)
+    } else {
+        implementation rootProject.ext.dependencies.woven_annotation
+    }
+}
+
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+
+if (isLocalMaven.toBoolean()) {
+    //本地maven
+    apply plugin: 'maven'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                //本地的Maven地址
+                repository(url: uri('../local-plugin'))
+                pom.project {
+                    groupId rootProject.groupId
+                    artifactId 'woven-plugin'
+                    version '1.0.0'
+                }
+            }
+        }
+    }
+} else {
+    //远程maven
+    apply plugin: 'com.novoda.bintray-release'
+
+    publish {
+        artifactId = 'woven-plugin'
+        userOrg = rootProject.userOrg//bintray.com用户名
+        groupId = rootProject.groupId//jcenter上的路径
+        uploadName = artifactId//项目名称
+        publishVersion = "1.0.0"//版本号
+        desc = "a easy plugin to use for gradle "//项目介绍
+        website = rootProject.website//项目主页
+        licences = rootProject.licences
+    }
+}
