@@ -26,7 +26,7 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.18"//上传到jcenter kotlin用到
 
         //YWoven插件
-        classpath "com.jy.woven:woven-plugin:1.0.0"
+        classpath "com.jy.woven:woven-plugin:1.0.1"
     }
 }
 
