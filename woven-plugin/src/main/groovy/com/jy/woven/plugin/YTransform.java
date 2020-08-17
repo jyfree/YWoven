@@ -140,7 +140,7 @@ public class YTransform extends Transform {
                     ClassReader classReader = new ClassReader(IOUtils.toByteArray(inputStream));
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);
                     LifecycleClassVisitor classVisitor = new LifecycleClassVisitor(classWriter);
-                    classReader.accept(classVisitor, 0);
+                    classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
                     byte[] code = classWriter.toByteArray();
                     jarOutputStream.write(code);
                 } else {
@@ -190,7 +190,7 @@ public class YTransform extends Transform {
                     ClassReader classReader = new ClassReader(YFileUtils.toByte(file));
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);
                     LifecycleClassVisitor classVisitor = new LifecycleClassVisitor(classWriter);
-                    classReader.accept(classVisitor, 0);
+                    classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
                     byte[] code = classWriter.toByteArray();
                     FileOutputStream fos = new FileOutputStream(
                             Objects.requireNonNull(file.getParentFile()).getAbsolutePath() + File.separator + name);

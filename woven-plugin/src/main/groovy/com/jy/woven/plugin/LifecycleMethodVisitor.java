@@ -1,8 +1,5 @@
 package com.jy.woven.plugin;
 
-import com.jy.woven.annotation.RunTimeTrace;
-
-import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -17,11 +14,6 @@ public class LifecycleMethodVisitor extends MethodVisitor {
         this.name = name;
     }
 
-    @Override
-    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-        Logger.info(TAG + "visitAnnotation ----%s", desc);
-        return super.visitAnnotation(desc, visible);
-    }
 
     @Override
     public void visitCode() {
@@ -43,6 +35,6 @@ public class LifecycleMethodVisitor extends MethodVisitor {
         mv.visitInsn(Opcodes.POP);
 
         super.visitCode();
-        //方法执行后插入
+
     }
 }
