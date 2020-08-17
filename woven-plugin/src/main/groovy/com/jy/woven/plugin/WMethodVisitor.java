@@ -3,13 +3,13 @@ package com.jy.woven.plugin;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class LifecycleMethodVisitor extends MethodVisitor {
+public class WMethodVisitor extends MethodVisitor {
 
-    private static final String TAG = "LifecycleMethodVisitor: ";
+    private static final String TAG = "WMethodVisitor: ";
 
     private String name;
 
-    public LifecycleMethodVisitor(MethodVisitor methodVisitor, String name) {
+    public WMethodVisitor(MethodVisitor methodVisitor, String name) {
         super(Opcodes.ASM6, methodVisitor);
         this.name = name;
     }

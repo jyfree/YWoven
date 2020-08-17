@@ -6,14 +6,14 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class LifecycleClassVisitor extends ClassVisitor implements Opcodes {
+public class WClassVisitor extends ClassVisitor implements Opcodes {
 
-    private static final String TAG = "LifecycleClassVisitor: ";
+    private static final String TAG = "WClassVisitor: ";
 
     private String mClassName;
-    private RunTimeTraceAnnotationVisitor runTimeTraceAnnotationVisitor;
+    private WAnnotationVisitor wAnnotationVisitor;
 
-    public LifecycleClassVisitor(ClassVisitor classVisitor) {
+    public WClassVisitor(ClassVisitor classVisitor) {
         super(ASM6, classVisitor);
     }
 
@@ -30,8 +30,8 @@ public class LifecycleClassVisitor extends ClassVisitor implements Opcodes {
         Logger.info(TAG + "visitAnnotation -------->%s", desc);
         AnnotationVisitor annotationVisitor = super.visitAnnotation(desc, visible);
         if (annotationVisitor != null && desc != null) {
-            runTimeTraceAnnotationVisitor = new RunTimeTraceAnnotationVisitor(Opcodes.ASM6, annotationVisitor, desc);
-            return runTimeTraceAnnotationVisitor;
+            wAnnotationVisitor = new WAnnotationVisitor(Opcodes.ASM6, annotationVisitor, desc);
+            return wAnnotationVisitor;
         }
         return annotationVisitor;
     }
@@ -43,16 +43,16 @@ public class LifecycleClassVisitor extends ClassVisitor implements Opcodes {
         MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
         if (mv == null) return null;
 
-        if (MatchUtils.matchLifecycleClassName(mClassName)) {
+        if (MatchUtils.matchClass(mClassName)) {
             if ("onCreate".equals(name)) {
                 //处理onCreate
-                return new LifecycleMethodVisitor(mv, name);
+                return new WMethodVisitor(mv, name);
             } else if ("onDestroy".equals(name)) {
                 //处理onDestroy
-                return new LifecycleMethodVisitor(mv, name);
-            } else if (runTimeTraceAnnotationVisitor != null) {
+                return new WMethodVisitor(mv, name);
+            } else if (wAnnotationVisitor != null) {
 
-                return new YAdviceAdapter(Opcodes.ASM6, mv, access, name, desc);
+                return new WAdviceAdapter(Opcodes.ASM6, mv, access, name, desc);
             }
         }
         return mv;

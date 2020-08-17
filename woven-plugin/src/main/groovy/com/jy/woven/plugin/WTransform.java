@@ -35,7 +35,7 @@ import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
 
-public class YTransform extends Transform {
+public class WTransform extends Transform {
 
     private static final String TRANSFORM = "Transform: ";
 
@@ -133,13 +133,14 @@ public class YTransform extends Transform {
                 String entryName = jarEntry.getName();
                 ZipEntry zipEntry = new ZipEntry(entryName);
                 InputStream inputStream = jarFile.getInputStream(jarEntry);
+
                 //插桩class
-                if (MatchUtils.matchLifecycleFileName(entryName, true)) {
+                if (MatchUtils.matchJarFile(entryName)) {
                     //class文件处理
                     jarOutputStream.putNextEntry(zipEntry);
                     ClassReader classReader = new ClassReader(IOUtils.toByteArray(inputStream));
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);
-                    LifecycleClassVisitor classVisitor = new LifecycleClassVisitor(classWriter);
+                    WClassVisitor classVisitor = new WClassVisitor(classWriter);
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
                     byte[] code = classWriter.toByteArray();
                     jarOutputStream.write(code);
@@ -185,11 +186,11 @@ public class YTransform extends Transform {
             for (File file : files) {
                 String name = file.getName();
                 //插桩class
-                if (MatchUtils.matchLifecycleFileName(name, false)) {
+                if (MatchUtils.matchDirFile(dir, file)) {
 
-                    ClassReader classReader = new ClassReader(YFileUtils.toByte(file));
+                    ClassReader classReader = new ClassReader(WFileUtils.toByte(file));
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);
-                    LifecycleClassVisitor classVisitor = new LifecycleClassVisitor(classWriter);
+                    WClassVisitor classVisitor = new WClassVisitor(classWriter);
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
                     byte[] code = classWriter.toByteArray();
                     FileOutputStream fos = new FileOutputStream(

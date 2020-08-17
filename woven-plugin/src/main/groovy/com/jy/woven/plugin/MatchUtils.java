@@ -1,22 +1,44 @@
 package com.jy.woven.plugin;
 
+
+import java.io.File;
+
 public class MatchUtils {
 
     /**
-     * 查找需要修改的文件
+     * 查找需要修改的文件(jar)
      *
-     * @param name  对应的文件
-     * @param isJar true：jar文件，false：文件目录下文件
+     * @param name 对应的文件
      * @return
      */
-    public static boolean matchLifecycleFileName(String name, boolean isJar) {
-        if (name.endsWith(".class") && !name.startsWith("R\\$")
-                && !"R.class".equals(name) && !"BuildConfig.class".equals(name)
-                && ("androidx/appcompat/app/AppCompatActivity.class".equals(name) || "TestJavaActivity.class".equals(name) ||
-                "MainActivity.class".equals(name)||"LogWoven.class".equals(name))) {
-            Logger.info("-------------------------matching from %s-------------------------", isJar ? "jarInputs" : "directoryInputs");
-            Logger.info("Transform: matching is ---->%s", name);
-            return true;
+    public static boolean matchJarFile(String name) {
+        if (filterClass(name)) {
+            String trimName = StringUtils.scanJarTrimName(name);
+            if (matchTrimName(trimName)) {
+                Logger.info("-------------------------matching from jarInputs-------------------------");
+                Logger.info("Transform: matching is ---->%s", trimName);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 查找需要修改的文件(dir)
+     *
+     * @param dir  文件路径
+     * @param file 文件
+     * @return
+     */
+    public static boolean matchDirFile(File dir, File file) {
+        String name = file.getName();
+        if (filterClass(name)) {
+            String trimName = StringUtils.scanDirTrimName(dir, file);
+            if (matchTrimName(trimName)) {
+                Logger.info("-------------------------matching from directoryInputs-------------------------");
+                Logger.info("Transform: matching is ---->%s", trimName);
+                return true;
+            }
         }
         return false;
     }
@@ -27,11 +49,31 @@ public class MatchUtils {
      * @param name
      * @return
      */
-    public static boolean matchLifecycleClassName(String name) {
-        if ("androidx/appcompat/app/AppCompatActivity".equals(name) || "com/jy/woven/simple/TestJavaActivity".equals(name) ||
-                "com/jy/woven/simple/MainActivity".equals(name)||"com/jy/woven/simple/LogWoven".equals(name)) {
-            return true;
-        }
-        return false;
+    public static boolean matchClass(String name) {
+        String tmpName = name.replace("/", ".");
+        return matchTrimName(tmpName);
     }
+
+
+    /**
+     * 过滤R.class、R$、BuildConfig.class等文件
+     *
+     * @param name
+     * @return
+     */
+    private static boolean filterClass(String name) {
+        return name.endsWith(".class") && !name.startsWith("R\\$")
+                && !"R.class".equals(name) && !"BuildConfig.class".equals(name);
+    }
+
+
+    /**
+     * @param name
+     * @return
+     */
+    private static boolean matchTrimName(String name) {
+        return "androidx.appcompat.app.AppCompatActivity".equals(name) || "com.jy.woven.simple.TestJavaActivity".equals(name) ||
+                "com.jy.woven.simple.MainActivity".equals(name) || "com.jy.woven.simple.LogWoven".equals(name);
+    }
+
 }

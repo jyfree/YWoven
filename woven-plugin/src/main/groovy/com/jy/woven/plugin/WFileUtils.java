@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class YFileUtils {
+public class WFileUtils {
     public static byte[] toByte(File file) throws IOException {
 
         InputStream input = new FileInputStream(file);

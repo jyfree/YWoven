@@ -11,7 +11,7 @@ import org.gradle.api.Project;
  * @date: 2020/4/26 11:58
  * @author: jy
  */
-public class YPlugin implements Plugin<Project> {
+public class WPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
@@ -19,7 +19,7 @@ public class YPlugin implements Plugin<Project> {
         Extension extension = project.getExtensions().create(Const.NAME, Extension.class);
 
         Logger.info("register YWoven transform");
-        project.getExtensions().findByType(BaseExtension.class).registerTransform(new YTransform());
+        project.getExtensions().findByType(BaseExtension.class).registerTransform(new WTransform());
 
         project.afterEvaluate(p -> Logger.setConfig(extension));
 
