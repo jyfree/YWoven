@@ -16,12 +16,12 @@ public class Test {
         Pointcut[] pointcuts = wovenType.getDeclaredPointcuts();
         for (Pointcut pointcut :
                 pointcuts) {
-            Log.i("test---", pointcut.getName() + "==" + pointcut.getExpression());
+            Log.i("YWoven---pointcut", pointcut.getName() + "==" + pointcut.getExpression());
         }
         Advice[] advices=wovenType.getDeclaredAdvice();
         for (Advice advice:advices
              ) {
-            Log.i("test2---", advice.getName() + "==" + advice.getPointcut());
+            Log.i("YWoven---advices", advice.getName() + "==" + advice.getPointcut());
 
         }
     }
