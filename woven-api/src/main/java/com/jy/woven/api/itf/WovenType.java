@@ -5,6 +5,8 @@ import com.jy.woven.api.exception.NoSuchActionException;
 import com.jy.woven.api.exception.NoSuchPointcutException;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @description 自定义woven类型
@@ -25,16 +27,16 @@ public interface WovenType<T> {
     Class<T> getJavaClass();
 
 
-    Method[] getDeclaredMethods();
+    HashMap<String, Method> getDeclaredMethods();
 
 
     Pointcut getDeclaredPointcut(String name) throws NoSuchPointcutException;
 
 
-    Pointcut[] getDeclaredPointcuts();
+    List<Pointcut> getDeclaredPointcuts();
 
 
-    Action[] getDeclaredAction(ActionKind... ofTypes);
+    List<Action> getDeclaredAction(ActionKind... ofTypes);
 
 
     Action getDeclaredAction(String name) throws NoSuchActionException;

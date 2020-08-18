@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'YWoven'
 
 YWoven {
@@ -43,6 +44,7 @@ dependencies {
         implementation rootProject.ext.dependencies.woven_annotation
     }
     implementation project(':woven-api')
+    kapt project(':woven-compiler')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
