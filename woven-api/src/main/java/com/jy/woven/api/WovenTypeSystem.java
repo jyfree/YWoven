@@ -8,6 +8,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * @description 缓存wovenType
+ * @date: 2020/8/18 10:36
+ * @author: jy
+ */
 public class WovenTypeSystem {
     private static Map<Class, WeakReference<WovenType>> wovenType =
             Collections.synchronizedMap(new WeakHashMap<Class, WeakReference<WovenType>>());
@@ -24,7 +29,6 @@ public class WovenTypeSystem {
                 return theWovenType;
             }
         }
-        // neither key nor value was found
         WovenType<T> theWovenType = new WovenImpl<T>(fromClass);
         wovenType.put(fromClass, new WeakReference<WovenType>(theWovenType));
         return theWovenType;

@@ -4,7 +4,7 @@ package com.jy.woven.simple;
 import android.util.Log;
 
 import com.jy.woven.api.impl.WovenImpl;
-import com.jy.woven.api.itf.Advice;
+import com.jy.woven.api.itf.Action;
 import com.jy.woven.api.itf.Pointcut;
 import com.jy.woven.api.itf.WovenType;
 
@@ -18,10 +18,10 @@ public class Test {
                 pointcuts) {
             Log.i("YWoven---pointcut", pointcut.getName() + "==" + pointcut.getExpression());
         }
-        Advice[] advices=wovenType.getDeclaredAdvice();
-        for (Advice advice:advices
-             ) {
-            Log.i("YWoven---advices", advice.getName() + "==" + advice.getPointcut());
+        Action[] actions = wovenType.getDeclaredAction();
+        for (Action action : actions
+        ) {
+            Log.i("YWoven---action", action.getName() + "==" + action.getPointcut());
 
         }
     }

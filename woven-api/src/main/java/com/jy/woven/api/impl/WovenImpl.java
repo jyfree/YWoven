@@ -2,12 +2,10 @@ package com.jy.woven.api.impl;
 
 import com.jy.woven.annotation.After;
 import com.jy.woven.annotation.Before;
-import com.jy.woven.api.AdviceKind;
-import com.jy.woven.api.exception.NoSuchAdviceException;
+import com.jy.woven.api.ActionKind;
+import com.jy.woven.api.exception.NoSuchActionException;
 import com.jy.woven.api.exception.NoSuchPointcutException;
-import com.jy.woven.api.impl.AdviceImpl;
-import com.jy.woven.api.impl.PointcutImpl;
-import com.jy.woven.api.itf.Advice;
+import com.jy.woven.api.itf.Action;
 import com.jy.woven.api.itf.Pointcut;
 import com.jy.woven.api.itf.WovenType;
 
@@ -18,11 +16,16 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @description 自定义woven类型实现类
+ * @date: 2020/8/18 10:27
+ * @author: jy
+ */
 public class WovenImpl<T> implements WovenType<T> {
 
     private Class<T> clazz;
     private Pointcut[] declaredPointcuts = null;
-    private Advice[] declaredAdvice = null;
+    private Action[] declaredAction = null;
 
     public WovenImpl(Class<T> fromClass) {
         this.clazz = fromClass;
@@ -105,58 +108,58 @@ public class WovenImpl<T> implements WovenType<T> {
 
 
     @Override
-    public Advice[] getDeclaredAdvice(AdviceKind... ofTypes) {
-        Set<AdviceKind> types;
+    public Action[] getDeclaredAction(ActionKind... ofTypes) {
+        Set<ActionKind> types;
         if (ofTypes.length == 0) {
-            types = EnumSet.allOf(AdviceKind.class);
+            types = EnumSet.allOf(ActionKind.class);
         } else {
-            types = EnumSet.noneOf(AdviceKind.class);
+            types = EnumSet.noneOf(ActionKind.class);
             types.addAll(Arrays.asList(ofTypes));
         }
-        return getDeclaredAdvice(types);
+        return getDeclaredAction(types);
     }
 
 
-    private Advice[] getDeclaredAdvice(Set ofAdviceTypes) {
-        if (declaredAdvice == null) initDeclaredAdvice();
-        List<Advice> adviceList = new ArrayList<Advice>();
-        for (Advice a : declaredAdvice) {
-            if (ofAdviceTypes.contains(a.getKind())) adviceList.add(a);
+    private Action[] getDeclaredAction(Set ofActionTypes) {
+        if (declaredAction == null) initDeclaredAction();
+        List<Action> actionList = new ArrayList<Action>();
+        for (Action a : declaredAction) {
+            if (ofActionTypes.contains(a.getKind())) actionList.add(a);
         }
-        Advice[] ret = new Advice[adviceList.size()];
-        adviceList.toArray(ret);
+        Action[] ret = new Action[actionList.size()];
+        actionList.toArray(ret);
         return ret;
     }
 
     @Override
-    public Advice getDeclaredAdvice(String name) throws NoSuchAdviceException {
+    public Action getDeclaredAction(String name) throws NoSuchActionException {
         if (name.equals(""))
-            throw new IllegalArgumentException("use getAdvice(AdviceType...) instead for un-named advice");
-        if (declaredAdvice == null) initDeclaredAdvice();
-        for (Advice a : declaredAdvice) {
+            throw new IllegalArgumentException("use getAction(ActionType...) instead for un-named action");
+        if (declaredAction == null) initDeclaredAction();
+        for (Action a : declaredAction) {
             if (a.getName().equals(name)) return a;
         }
-        throw new NoSuchAdviceException(name);
+        throw new NoSuchActionException(name);
     }
 
 
-    private void initDeclaredAdvice() {
+    private void initDeclaredAction() {
         Method[] methods = clazz.getDeclaredMethods();
-        List<Advice> adviceList = new ArrayList<Advice>();
+        List<Action> actionList = new ArrayList<Action>();
         for (Method method : methods) {
-            Advice advice = asAdvice(method);
-            if (advice != null) adviceList.add(advice);
+            Action action = asAction(method);
+            if (action != null) actionList.add(action);
         }
-        declaredAdvice = new Advice[adviceList.size()];
-        adviceList.toArray(declaredAdvice);
+        declaredAction = new Action[actionList.size()];
+        actionList.toArray(declaredAction);
     }
 
-    private Advice asAdvice(Method method) {
+    private Action asAction(Method method) {
         if (method.getAnnotations().length == 0) return null;
         Before beforeAnn = method.getAnnotation(Before.class);
-        if (beforeAnn != null) return new AdviceImpl(method, beforeAnn.value(), AdviceKind.BEFORE);
+        if (beforeAnn != null) return new ActionImpl(method, beforeAnn.value(), ActionKind.BEFORE);
         After afterAnn = method.getAnnotation(After.class);
-        if (afterAnn != null) return new AdviceImpl(method, afterAnn.value(), AdviceKind.AFTER);
+        if (afterAnn != null) return new ActionImpl(method, afterAnn.value(), ActionKind.AFTER);
         return null;
     }
 }
