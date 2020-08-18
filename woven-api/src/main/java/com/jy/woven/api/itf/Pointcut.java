@@ -1,5 +1,7 @@
 package com.jy.woven.api.itf;
 
+import java.lang.reflect.Method;
+
 /**
  * @description 切入点接口
  * @date: 2020/8/17 10:13
@@ -7,6 +9,8 @@ package com.jy.woven.api.itf;
  */
 public interface Pointcut {
     String getName();
+
+    Method getMethod();
 
     String getExpression();
 

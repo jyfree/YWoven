@@ -99,7 +99,7 @@ public class WovenProcessor extends BaseProcessor {
 
                 Pointcut pointcut = methodSymbol.getAnnotation(Pointcut.class);
                 if (pointcut != null) {
-                    initDeclaredPointcutsCode.addStatement("pointcutList.add(new $T($S,$S,declaredMethodMap.get($S)))", pointcutImplClass, methodName, pointcut.value(), methodName);
+                    initDeclaredPointcutsCode.addStatement("pointcutList.add(new $T(declaredMethodMap.get($S),$S))", pointcutImplClass, methodName, pointcut.value());
                 }
                 After after = methodSymbol.getAnnotation(After.class);
                 if (after != null) {

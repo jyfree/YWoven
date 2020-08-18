@@ -15,11 +15,11 @@ public class LogWoven {
 
     @After("executionTest()")
     public void testAfter() {
-        Log.i("woven", "test After");
+        Log.i("YWoven", "test After");
     }
 
     @Before("@com.jy.woven.simple.TestJavaActivity.test()")
     public void testBefore() {
-        Log.i("woven", "test Before");
+        Log.i("YWoven", "test Before");
     }
 }

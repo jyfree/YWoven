@@ -10,19 +10,23 @@ import java.lang.reflect.Method;
  * @author: jy
  */
 public class PointcutImpl implements Pointcut {
-    private final String name;
-    private final String expression;
-    private final Method baseMethod;
 
-    public PointcutImpl(String name, String expression, Method baseMethod) {
-        this.name = name;
+    private final Method method;
+    private final String expression;
+
+    public PointcutImpl(Method method, String expression) {
+        this.method = method;
         this.expression = expression;
-        this.baseMethod = baseMethod;
     }
 
     @Override
     public String getName() {
-        return name;
+        return method.getName();
+    }
+
+    @Override
+    public Method getMethod() {
+        return method;
     }
 
     @Override
@@ -32,11 +36,11 @@ public class PointcutImpl implements Pointcut {
 
     @Override
     public int getModifiers() {
-        return baseMethod.getModifiers();
+        return method.getModifiers();
     }
 
     @Override
     public Class<?>[] getParameterTypes() {
-        return baseMethod.getParameterTypes();
+        return method.getParameterTypes();
     }
 }

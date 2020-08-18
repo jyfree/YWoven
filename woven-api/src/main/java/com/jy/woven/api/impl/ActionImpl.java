@@ -12,14 +12,15 @@ import java.lang.reflect.Method;
  */
 public class ActionImpl implements Action {
 
-    private final ActionKind kind;
-    private final Method adviceMethod;
+    private final Method method;
     private final String pointcut;
+    private final ActionKind kind;
 
-    public ActionImpl(Method adviceMethod, String pointcut, ActionKind kind) {
-        this.kind = kind;
-        this.adviceMethod = adviceMethod;
+
+    public ActionImpl(Method method, String pointcut, ActionKind kind) {
+        this.method = method;
         this.pointcut = pointcut;
+        this.kind = kind;
     }
 
     @Override
@@ -29,7 +30,12 @@ public class ActionImpl implements Action {
 
     @Override
     public String getName() {
-        return adviceMethod.getName();
+        return method.getName();
+    }
+
+    @Override
+    public Method getMethod() {
+        return method;
     }
 
     @Override
@@ -40,11 +46,11 @@ public class ActionImpl implements Action {
 
     @Override
     public int getModifiers() {
-        return adviceMethod.getModifiers();
+        return method.getModifiers();
     }
 
     @Override
     public Class<?>[] getParameterTypes() {
-        return adviceMethod.getParameterTypes();
+        return method.getParameterTypes();
     }
 }
