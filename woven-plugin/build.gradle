@@ -6,9 +6,9 @@ dependencies {
     implementation localGroovy()
     implementation 'com.android.tools.build:gradle:3.2.1'
     if (isLocalMaven.toBoolean()) {
-        implementation files(localAnnotation)
+        implementation files(localApi)
     } else {
-        implementation rootProject.ext.dependencies.woven_annotation
+        implementation rootProject.ext.dependencies.woven_api
     }
 }
 

@@ -39,9 +39,9 @@ dependencies {
     implementation rootProject.ext.dependencies.androidx_constraintlayout
 
     if (isLocalMaven.toBoolean()) {
-        implementation files(localAnnotation)
+        implementation files(localApi)
     } else {
-        implementation rootProject.ext.dependencies.woven_annotation
+        implementation rootProject.ext.dependencies.woven_api
     }
     kapt project(':woven-compiler')
 

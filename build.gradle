@@ -54,7 +54,7 @@ ext {
     website = 'https://github.com/jyfree/YWoven'
     licences = ['Apache-2.0']
 
-    localAnnotation = projectDir.getPath() + "/local-plugin/com/jy/woven/woven-annotation/1.0.0/woven-annotation-1.0.0.jar"
+    localApi = projectDir.getPath() + "/local-plugin/com/jy/woven/woven-api/1.0.0/woven-api-1.0.0.jar"
 
 }
 
