@@ -26,7 +26,6 @@ public class PointcutRoute {
     //切面类型信息
     private static HashMap<String, ActionInfo> actionInfoMap = new HashMap<>();
 
-    public static final String test = "fuck you";
 
     public static void initWovenInfoToMap() {
 

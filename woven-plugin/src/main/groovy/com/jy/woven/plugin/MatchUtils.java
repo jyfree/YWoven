@@ -1,8 +1,6 @@
 package com.jy.woven.plugin;
 
 
-import com.jy.woven.api.PointcutRoute;
-
 import java.io.File;
 
 public class MatchUtils {
@@ -37,7 +35,6 @@ public class MatchUtils {
         if (filterClass(name)) {
             String trimName = StringUtils.scanDirTrimName(dir, file);
             if (matchTrimName(trimName)) {
-                Logger.info("matchDirFile %s--diao ni ", PointcutRoute.test);
                 Logger.info("-------------------------matching from directoryInputs-------------------------");
                 Logger.info("Transform: matching is ---->%s", trimName);
                 return true;
