@@ -26,10 +26,27 @@ public abstract class BaseWovenImpl<T> implements WovenType<T> {
     public List<Pointcut> declaredPointcuts = null;
     public List<Action> declaredActions = null;
     public HashMap<String, Method> declaredMethodMap = null;
+    private Object instance;
 
     public BaseWovenImpl(Class<T> fromClass) {
         this.clazz = fromClass;
+        init();
         getDeclaredMethods();
+    }
+
+    private void init() {
+        try {
+            instance = this.clazz.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Object getInstance() {
+        return instance;
     }
 
     @Override

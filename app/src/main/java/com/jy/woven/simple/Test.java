@@ -25,12 +25,12 @@ public class Test {
         ) {
             Log.i("YWoven---action", action.getName() + "==" + action.getPointcut() + "==" + action.getMethod());
             try {
-                action.getMethod().invoke(null);
+                action.getMethod().invoke(logWoven.getInstance());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 

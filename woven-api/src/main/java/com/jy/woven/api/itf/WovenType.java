@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface WovenType<T> {
 
+    Object getInstance();
+
     String getName();
 
 
