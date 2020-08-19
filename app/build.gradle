@@ -43,7 +43,6 @@ dependencies {
     } else {
         implementation rootProject.ext.dependencies.woven_annotation
     }
-    implementation project(':woven-api')
     kapt project(':woven-compiler')
 
     testImplementation 'junit:junit:4.12'

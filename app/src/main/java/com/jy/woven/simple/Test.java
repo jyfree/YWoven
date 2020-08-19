@@ -1,7 +1,6 @@
 package com.jy.woven.simple;
 
 
-import com.jy.woven.api.PointcutRoute;
 import com.jy.woven.generated.LogWoven_Impl;
 
 public class Test {
@@ -29,7 +28,7 @@ public class Test {
 //            }
 //
 //        }
-        PointcutRoute.wovenImplList.add(logWoven);
-        PointcutRoute.initWovenInfoToMap();
+//        PointcutRoute.wovenImplList.add(logWoven);
+//        PointcutRoute.initWovenInfoToMap();
     }
 }

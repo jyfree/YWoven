@@ -18,7 +18,7 @@ import java.util.List;
 public class PointcutRoute {
 
     //编织信息
-    public static HashMap<String, List<WovenInfo>> wovenInfoMap = new HashMap<>();
+    public static final HashMap<String, List<WovenInfo>> wovenInfoMap = new HashMap<>();
 
     //编织实现类集合
     public static List<BaseWovenImpl<?>> wovenImplList = new ArrayList<>();
@@ -26,6 +26,7 @@ public class PointcutRoute {
     //切面类型信息
     private static HashMap<String, ActionInfo> actionInfoMap = new HashMap<>();
 
+    public static final String test = "fuck you";
 
     public static void initWovenInfoToMap() {
 
