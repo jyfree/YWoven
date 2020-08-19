@@ -22,4 +22,9 @@ public class LogWoven {
     public void testBefore() {
         Log.i("YWoven", "test Before");
     }
+
+    @Before("@com.jy.woven.simple.TestJavaActivity.test2(*)")
+    public void testBefore2() {
+        Log.i("YWoven", "test Before 2");
+    }
 }

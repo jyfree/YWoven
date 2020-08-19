@@ -19,6 +19,12 @@ public class TestJavaActivity extends AppCompatActivity {
         return msg;
     }
 
+    private String test2() {
+
+        String msg = "456";
+        return msg;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
