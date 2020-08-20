@@ -40,6 +40,14 @@ public class WovenProcessor extends BaseProcessor {
             return false;
         }
         messager.printMessage(Diagnostic.Kind.NOTE, "WovenProcessor--processing...");
+
+        ClassName pointcutRouteClass = className(Const.POINTCUT_ROUTE_CLASS);
+
+        // 生成代码：if (PointcutRoute.wovenImplList.size() > 0) return;
+        CodeBlock.Builder yWovenBuilder = CodeBlock.builder();
+        yWovenBuilder.addStatement("if ($T.wovenImplList.size() > 0) return", pointcutRouteClass);
+
+
         for (Element classElement : env.getElementsAnnotatedWith(Woven.class)) {
             if (!(classElement instanceof Symbol.ClassSymbol)) {
                 continue;
@@ -123,7 +131,15 @@ public class WovenProcessor extends BaseProcessor {
 
             //生成实现类
             buildClass(Const.GEN_PKG, className + Const.GEN_CLASS_IMPL_NAME, superName, null, methodSpecList, null);
+
+            //生成代码，如：PointcutRoute.wovenImplList.add(new LogWoven_Impl());
+            yWovenBuilder.addStatement("$T.wovenImplList.add(new $L_Impl())", pointcutRouteClass, className);
         }
+        //生成代码：PointcutRoute.initWovenInfoToMap();
+        yWovenBuilder.addStatement("$T.initWovenInfoToMap()", pointcutRouteClass);
+        //创建YWoven类
+        buildClass(Const.GEN_PKG, Const.YWOVEN_NAME, Const.INIT_METHOD, TypeName.VOID, yWovenBuilder.build());
+
         messager.printMessage(Diagnostic.Kind.NOTE, "WovenProcessor--finish...");
         messager.printMessage(Diagnostic.Kind.NOTE, "...");
         messager.printMessage(Diagnostic.Kind.NOTE, "...");

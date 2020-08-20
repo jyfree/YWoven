@@ -1,7 +1,5 @@
 package com.jy.woven.simple;
 
-import android.util.Log;
-
 import com.jy.woven.annotation.After;
 import com.jy.woven.annotation.Before;
 import com.jy.woven.annotation.Pointcut;
@@ -15,16 +13,16 @@ public class LogWoven {
 
     @After("executionTest()")
     public void testAfter() {
-        Log.i("YWoven", "test After");
+        YLogUtils.INSTANCE.i("test After");
     }
 
     @Before("@com.jy.woven.simple.TestJavaActivity.test()")
     public void testBefore() {
-        Log.i("YWoven", "test Before");
+        YLogUtils.INSTANCE.i("test Before");
     }
 
     @Before("@com.jy.woven.simple.TestJavaActivity.test2(*)")
     public void testBefore2() {
-        Log.i("YWoven", "test Before 2");
+        YLogUtils.INSTANCE.i("test Before 2");
     }
 }
