@@ -1,5 +1,11 @@
 apply plugin: 'groovy'
 
+jar {
+    from {
+        zipTree(new File(localApi))
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation gradleApi()
