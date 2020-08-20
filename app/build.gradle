@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'YWoven'
+apply plugin: 'android-aspectjx'
 
 YWoven {
     enableDebug = true // 调试开关
@@ -29,6 +30,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+    }
 }
 
 dependencies {
@@ -37,6 +42,8 @@ dependencies {
     implementation rootProject.ext.dependencies.androidx_appcompat
     implementation rootProject.ext.dependencies.androidx_core_ktx
     implementation rootProject.ext.dependencies.androidx_constraintlayout
+
+    implementation 'org.aspectj:aspectjrt:1.9.5'
 
     if (isLocalMaven.toBoolean()) {
         implementation files(localApi)

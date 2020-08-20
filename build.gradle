@@ -27,6 +27,9 @@ buildscript {
 
         //YWoven插件
         classpath "com.jy.woven:woven-plugin:1.0.1"
+
+        //aspectjx插件
+        classpath "com.jy.woven:woven-aspectjx:1.0.0"
     }
 }
 

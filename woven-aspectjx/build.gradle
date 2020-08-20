@@ -1,0 +1,44 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+jar {
+    from {
+        zipTree(new File(project.projectDir.absolutePath + "/libs/aspectjtools.jar"))
+    }
+}
+
+dependencies {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+
+    implementation gradleApi()
+    implementation localGroovy()
+
+    implementation 'com.android.tools.build:gradle:3.6.0'
+    implementation 'com.android.tools.build:transform-api:1.5.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation files('libs/aspectjtools.jar')
+
+}
+
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //本地的Maven地址
+            repository(url: uri('../local-plugin'))
+            pom.project {
+                groupId rootProject.groupId
+                artifactId 'woven-aspectjx'
+                version '1.0.0'
+            }
+        }
+    }
+}
