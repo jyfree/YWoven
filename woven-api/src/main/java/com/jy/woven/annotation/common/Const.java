@@ -22,7 +22,7 @@ public class Const {
     public static final String POINTCUT_CLASS = ITF_PKG + ".Pointcut";
     public static final String POINTCUT_IMPL_CLASS = IMPL_PKG + ".PointcutImpl";
 
-    public static final String YWOVEN_NAME = "YWoven";
+    public static final String POINTCUT_ROUTE_CONFIG_NAME = "PointcutRouteConfig";
     public static final String POINTCUT_ROUTE_CLASS = API_PKG + ".PointcutRoute";
     public static final String INIT_METHOD = "init";
 

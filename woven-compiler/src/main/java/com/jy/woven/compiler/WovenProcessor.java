@@ -138,7 +138,7 @@ public class WovenProcessor extends BaseProcessor {
         //生成代码：PointcutRoute.initWovenInfoToMap();
         yWovenBuilder.addStatement("$T.initWovenInfoToMap()", pointcutRouteClass);
         //创建YWoven类
-        buildClass(Const.GEN_PKG, Const.YWOVEN_NAME, Const.INIT_METHOD, TypeName.VOID, yWovenBuilder.build());
+        buildClass(Const.GEN_PKG, Const.POINTCUT_ROUTE_CONFIG_NAME, Const.INIT_METHOD, TypeName.VOID, yWovenBuilder.build());
 
         messager.printMessage(Diagnostic.Kind.NOTE, "WovenProcessor--finish...");
         messager.printMessage(Diagnostic.Kind.NOTE, "...");

@@ -10,7 +10,7 @@ import java.util.*
  */
 object YLogUtils {
 
-    var SHOW_LOG = false
+    var SHOW_LOG = true
     private const val TAG = "YWoven"
     private var level = LogLevel.ALL
 
